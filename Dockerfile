@@ -2,7 +2,7 @@
 FROM jenkins/jenkins:latest
 
 # Copiez le fichier JAR de votre application dans l'image
-COPY target/my-project-1.0-SNAPSHOT.jar /app/my-project.jar
+COPY target/ma-project-1.0-SNAPSHOT.jar /app/my-project.jar
 
 # Définissez le répertoire de travail
 WORKDIR /app
