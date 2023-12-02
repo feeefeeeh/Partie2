@@ -1,11 +1,11 @@
-# Utilisation d'une image de base
-FROM openjdk:11
+# Utilisez une image de base appropriée pour votre application
+FROM openjdk:11-jre-slim
 
-# Définition du répertoire de travail
+# Copiez le fichier JAR de votre application dans l'image
+COPY target/my-project-1.0-SNAPSHOT.jar /app/my-project.jar
+
+# Définissez le répertoire de travail
 WORKDIR /app
 
-# Copie des fichiers nécessaires dans le conteneur
-COPY target/my-project-1.0-SNAPSHOT.jar /app/app.jar
-
-# Commande à exécuter lorsque le conteneur démarre
-CMD ["java", "-jar", "app.jar"]
+# Commande pour exécuter l'application
+CMD ["java", "-jar", "my-project.jar"]
