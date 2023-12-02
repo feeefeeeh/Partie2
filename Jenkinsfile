@@ -32,4 +32,11 @@ pipeline {
             }
         }
     }
+    post{
+        failure{
+            emailext body : 'Ce Build $BUILD_NUMBER a échoué',
+                recepientProviders:[requestor()],subject:'build', to:
+                'felixhumeau1@gmail.com'
+        }
+    }   
 }
