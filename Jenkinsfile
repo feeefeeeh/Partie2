@@ -2,42 +2,35 @@ pipeline {
     agent any
 
     stages {
-        stage('checkout') {
+        stage('Lister les variables') {
             steps {
-                git credentialsId: 'Github-Credentials', url: 'https://github.com/feeefeeeh/Partie2'
+                script {
+                    // Définir les variables d'environnement
+                    env.USER_NAME = 'JohnDoe'
+                    env.FAVORITE_COLOR = 'Blue'
+
+                    // Afficher les variables
+                    echo "Nom de l'utilisateur : ${env.USER_NAME}"
+                    echo "Couleur préférée : ${env.FAVORITE_COLOR}"
+                }
             }
         }
-        stage('Build the application') {
+
+        stage('Utilisation des variables') {
             steps {
-                sh 'mvn clean install'
-            }
-        }
-        stage('Unit Test Execution') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Build the docker Image'){
-            steps {
-                sh 'docker build -t feeefeee/jenkins:latest .'
-            }
-        }
-        
-        stage('Push the docker image') {
-            steps {
-                withCredentials([string(credentialsId:'Docker', variable:'dockerHubPass')]){
-                    sh 'docker login -u feeefeee -p \${dockerHubPass}'
-                    }
-                sh 'docker push feeefeee/jenkins:latest'
+                script {
+                    // Créer une nouvelle variable d'environnement pour le loisir
+                    env.HOBBY = 'Lecture'
+
+                    // Redéfinir la couleur préférée
+                    env.FAVORITE_COLOR = 'Green'
+
+                    // Afficher toutes les variables
+                    echo "Nom de l'utilisateur : ${env.USER_NAME}"
+                    echo "Couleur préférée (mise à jour) : ${env.FAVORITE_COLOR}"
+                    echo "Loisir : ${env.HOBBY}"
+                }
             }
         }
     }
-    post{
-        failure{
-            emailext body: 'Ce Build $BUILD_NUMBER a échoué', 
-            recipientProviders:[requestor()],
-            subject:'build à échoué', 
-            to :'felixhumeau@yahoo.com'
-        }
-    }   
 }
