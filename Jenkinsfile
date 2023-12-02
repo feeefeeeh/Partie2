@@ -34,9 +34,10 @@ pipeline {
     }
     post{
         failure{
-            emailext body : 'Ce Build $BUILD_NUMBER a échoué',
-                recepientProviders:[requestor()],subject:'build', to:
-                'felixhumeau@yahoo.com'
+            emailext body: 'Ce Build $BUILD_NUMBER a échoué', 
+            recepientProviders:[requestor()],
+            subject:'build à échoué', 
+            to :'felixhumeau@yahoo.com'
         }
     }   
 }
